@@ -32,15 +32,18 @@ namespace Lab11
         private static void DisplayMovies(List<Movie> foundMovies)
         {
             Console.Clear();
+            Console.Write($"{foundMovies.Count} {foundMovies[0].Genre.ToString()} ");
             switch (foundMovies.Count)
             {
                 case 1:
-                    Console.WriteLine($"{foundMovies.Count} {foundMovies[0].Genre.ToString()} movie found:\n");
+                    Console.Write("movie");
                     break;
                 default:
-                    Console.WriteLine($"{foundMovies.Count} {foundMovies[0].Genre.ToString()} movies found:\n");
+                    Console.Write("movies");
                     break;
             }
+            Console.Write(" found:\n\n");
+
             int maxTitleLength = 0, maxYearLength = 0, maxRatingLength = 0, maxCategoryLength = 0;
             foreach (var movie in foundMovies)
             {
@@ -49,15 +52,19 @@ namespace Lab11
                 if (movie.Rating.ToString().Length >= maxRatingLength) maxRatingLength = movie.Rating.ToString().Length;
                 if (movie.Genre.ToString().Length >= maxCategoryLength) maxCategoryLength = movie.Genre.ToString().Length;
             }
-            int totalTableLength = maxTitleLength + maxYearLength + maxRatingLength + maxCategoryLength + 13;
-            string tableEdge = new string($"+{new string('-',totalTableLength - 2)}+");
+            string tableEdge = new string($"+" +
+                $"{new string('-', maxTitleLength+2)}+" +
+                $"{new string('-', maxYearLength + 2)}+" +
+                $"{new string('-', maxRatingLength + 2)}+" +
+                $"{new string('-', maxCategoryLength + 2)}+");
             Console.WriteLine(tableEdge);
-            foreach(var movie in foundMovies)
+            foreach (var movie in foundMovies)
             {
-                Console.WriteLine($"| {movie.Title}{new string(' ',maxTitleLength-movie.Title.Length)} " +
-                    $"| {movie.Year}{new string(' ',maxYearLength-movie.Year.ToString().Length)} " +
-                    $"| {movie.Rating}{new string(' ',maxRatingLength-movie.Rating.ToString().Length)} " +
-                    $"| {movie.Genre.ToString()}{new string(' ',maxCategoryLength-movie.Genre.ToString().Length)} |");
+                Console.WriteLine($"" +
+                    $"| {movie.Title}{new string(' ', maxTitleLength - movie.Title.Length)} " +
+                    $"| {movie.Year}{new string(' ', maxYearLength - movie.Year.ToString().Length)} " +
+                    $"| {movie.Rating}{new string(' ', maxRatingLength - movie.Rating.ToString().Length)} " +
+                    $"| {movie.Genre.ToString()}{new string(' ', maxCategoryLength - movie.Genre.ToString().Length)} |");
             }
             Console.WriteLine(tableEdge);
         }
